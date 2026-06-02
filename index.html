@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>hushkit — One kit. Full quiet.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:        #0e0d12;
+    --bg-2:      #16151a;
+    --card:      #1d1c22;
+    --raised:    #26242b;
+    --rim:       #2e2b34;
+    --ink:       #ece6dc;
+    --ink-mute:  rgba(236,230,220,0.55);
+    --ink-faint: rgba(236,230,220,0.28);
+    --pink:      #e2a3b1;
+    --pink-deep: #b87884;
+    --blue:      #a8c3d6;
+    --sand:      #d6b478;
+    --hot:       #ff7548;
+    --display:   "Space Grotesk", -apple-system, system-ui, sans-serif;
+    --mono:      "IBM Plex Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--mono);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--rim); border-radius: 5px; }
+
+  /* shared motion */
+  @keyframes wave-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .wave-scroll { animation: wave-scroll 6s linear infinite; }
+  @keyframes sonar { 0% { transform: scale(0.35); opacity: 0.85; } 100% { transform: scale(1.6); opacity: 0; } }
+  .sonar-ring { animation: sonar 2.4s ease-out infinite; transform-origin: center; }
+  .sonar-ring-2 { animation-delay: 0.8s; }
+  .sonar-ring-3 { animation-delay: 1.6s; }
+  .sonar-ring-4 { animation-delay: 2.0s; }
+  @keyframes breath-glow { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+  .cursor-blink { animation: breath-glow 1s ease-in-out infinite; }
+
+  /* Scroll-reveal — CSS-only, non-destructive.
+     Content is ALWAYS visible by default; the entrance animation is a pure
+     progressive enhancement driven by the scroll position (view timeline),
+     so it never depends on JS timing and can never leave content blank. */
+  .reveal { opacity: 1; }
+  @keyframes rise-vt {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        animation: rise-vt linear both;
+        animation-timeline: view();
+        animation-range: entry 2% cover 16%;
+      }
+    }
+  }
+</style>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<!-- phone size constant the app components read -->
+<script type="text/babel" data-presets="react">
+  const PHONE_W = 390, PHONE_H = 844;
+  Object.assign(window, { PHONE_W, PHONE_H });
+</script>
+
+<!-- real app screens, reused verbatim for fidelity -->
+<!-- the landing page itself -->
+<script type="text/babel" src="hushkit-landing.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>
