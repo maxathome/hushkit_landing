@@ -637,9 +637,8 @@ function Footer({ onPrivacy }) {
           <div style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkFaint, textTransform: 'uppercase' }}>White noise & shushing · made for the nursery</div>
           <div style={{ display: 'flex', gap: 24 }}>
             <a href="#" onClick={e => { e.preventDefault(); onPrivacy(); }} style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkMute, textTransform: 'uppercase', textDecoration: 'none' }}>privacy</a>
-            {['support', 'press'].map(l => (
-              <a key={l} href="#" onClick={e => e.preventDefault()} style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkMute, textTransform: 'uppercase', textDecoration: 'none' }}>{l}</a>
-            ))}
+            <a href="mailto:support@hushkit.co" style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkMute, textTransform: 'uppercase', textDecoration: 'none' }}>support</a>
+            <a href="#" onClick={e => e.preventDefault()} style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkMute, textTransform: 'uppercase', textDecoration: 'none' }}>press</a>
           </div>
         </div>
       </Section>
