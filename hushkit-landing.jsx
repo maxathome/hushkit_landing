@@ -638,7 +638,6 @@ function Footer({ onPrivacy }) {
           <div style={{ display: 'flex', gap: 24 }}>
             <a href="#" onClick={e => { e.preventDefault(); onPrivacy(); }} style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkMute, textTransform: 'uppercase', textDecoration: 'none' }}>privacy</a>
             <a href="mailto:support@hushkit.co" style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkMute, textTransform: 'uppercase', textDecoration: 'none' }}>support</a>
-            <a href="#" onClick={e => e.preventDefault()} style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkMute, textTransform: 'uppercase', textDecoration: 'none' }}>press</a>
           </div>
         </div>
       </Section>
