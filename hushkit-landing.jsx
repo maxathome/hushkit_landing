@@ -41,25 +41,18 @@ function Eyebrow({ children, color = T.pink, style }) {
   );
 }
 
-// ── App Store download button ──────────────────────────
+// ── App Store download button (official Apple badge) ──
 function AppStore({ small }) {
+  const h = small ? 40 : 52;
+  const w = Math.round(h * (119.66407 / 40));
   return (
     <a href="#" onClick={e => e.preventDefault()} style={{
-      display: 'inline-flex', alignItems: 'center', gap: 11, textDecoration: 'none',
-      padding: small ? '9px 16px' : '13px 22px',
-      background: T.ink, color: '#13121a', borderRadius: 12,
-      boxShadow: '0 6px 22px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)',
-      transition: 'transform .18s ease, box-shadow .18s ease',
+      display: 'inline-flex', textDecoration: 'none',
+      transition: 'transform .18s ease, opacity .18s ease',
     }}
-    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)'; }}
-    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 6px 22px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)'; }}>
-      <svg width={small ? 19 : 24} height={small ? 19 : 24} viewBox="0 0 24 24" fill="#13121a">
-        <path d="M16.36 12.6c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.75 2.28-1.6 2.78-.41 6.89 1.15 9.14.76 1.1 1.67 2.34 2.86 2.29 1.15-.05 1.58-.74 2.97-.74 1.39 0 1.78.74 3 .72 1.24-.02 2.02-1.12 2.78-2.23.88-1.28 1.24-2.52 1.26-2.58-.03-.01-2.42-.93-2.44-3.68zM14.1 5.86c.64-.78 1.07-1.85.95-2.93-.92.04-2.04.61-2.7 1.38-.59.69-1.11 1.79-.97 2.85 1.03.08 2.08-.52 2.72-1.3z"/>
-      </svg>
-      <div style={{ textAlign: 'left' }}>
-        <div style={{ fontFamily: T.mono, fontSize: 8, letterSpacing: 1.2, opacity: 0.6, textTransform: 'uppercase', whiteSpace: 'nowrap', lineHeight: 1 }}>Download on the</div>
-        <div style={{ fontFamily: T.display, fontSize: small ? 15 : 18, fontWeight: 600, letterSpacing: -0.3, lineHeight: 1.1, marginTop: 3, whiteSpace: 'nowrap' }}>App Store</div>
-      </div>
+    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.opacity = '0.82'; }}
+    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.opacity = '1'; }}>
+      <img src="images/app-store-badge.svg" alt="Download on the App Store" width={w} height={h} style={{ display: 'block' }} />
     </a>
   );
 }
