@@ -608,7 +608,7 @@ function PrivacyPolicy({ onBack }) {
 // ════════════════════════════════════════════════════════
 // FOOTER
 // ════════════════════════════════════════════════════════
-function Footer({ onPrivacy }) {
+function Footer() {
   return (
     <div style={{ position: 'relative', overflow: 'hidden', borderTop: `1px solid ${T.rim}`, marginTop: 40 }}>
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(90% 120% at 50% 0%, rgba(226,163,177,0.12), transparent 60%)', pointerEvents: 'none' }} />
@@ -629,7 +629,7 @@ function Footer({ onPrivacy }) {
           </div>
           <div style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkFaint, textTransform: 'uppercase' }}>White noise & shushing · made for the nursery</div>
           <div style={{ display: 'flex', gap: 24 }}>
-            <a href="#" onClick={e => { e.preventDefault(); onPrivacy(); }} style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkMute, textTransform: 'uppercase', textDecoration: 'none' }}>privacy</a>
+            <a href="/privacy" style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkMute, textTransform: 'uppercase', textDecoration: 'none' }}>privacy</a>
             <a href="mailto:support@hushkit.co" style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkMute, textTransform: 'uppercase', textDecoration: 'none' }}>support</a>
           </div>
         </div>
@@ -642,12 +642,6 @@ function Footer({ onPrivacy }) {
 // PAGE
 // ════════════════════════════════════════════════════════
 function App() {
-  const [showPrivacy, setShowPrivacy] = React.useState(false);
-
-  if (showPrivacy) {
-    return <PrivacyPolicy onBack={() => { setShowPrivacy(false); window.scrollTo(0, 0); }} />;
-  }
-
   return (
     <React.Fragment>
       <Nav />
@@ -695,7 +689,7 @@ function App() {
           />
         </Section>
       </div>
-      <Footer onPrivacy={() => { setShowPrivacy(true); window.scrollTo(0, 0); }} />
+      <Footer />
     </React.Fragment>
   );
 }
