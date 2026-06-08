@@ -283,7 +283,7 @@ function Kit() {
         <div style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 30px' }}>
           <Eyebrow style={{ justifyContent: 'center' }}>Everything in the kit</Eyebrow>
           <p style={{ fontFamily: T.display, fontSize: mobile ? 17 : 22, lineHeight: 1.5, color: T.ink, margin: '16px 0 0', fontWeight: 400, textWrap: 'pretty' }}>
-            AirPlay, Bluetooth, background playback, and listen detection — all included free. Unlock brown noise, white noise, and your own recorded shush for $2.99.
+            AirPlay, Bluetooth, background playback, and listen detection — all included free. Unlock The Full Kit for $2.99 — brown noise, white noise, and your own recorded shush.
           </p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 12 }}>
@@ -371,7 +371,7 @@ function SoundsTriptych() {
           </span>
           <span style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: 1.2, textTransform: 'uppercase', color: T.inkFaint }}>·</span>
           <span style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: 1.2, textTransform: 'uppercase', color: T.inkFaint, display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ width: 5, height: 5, borderRadius: '50%', background: T.inkFaint }} />Brown &amp; White — $2.99 unlock
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: T.inkFaint }} />Brown &amp; White — The Full Kit ($2.99)
           </span>
         </div>
       </div>
@@ -530,10 +530,10 @@ function PrivacyPolicy({ onBack }) {
         <p style={p}><strong style={{ color: T.ink }}>Microphone Access.</strong> HushKit requests access to your device's microphone for two purposes:</p>
         <ul style={{ paddingLeft: 22, margin: '10px 0' }}>
           <li style={li}><strong style={{ color: T.ink }}>Ambient sound detection</strong> — HushKit includes an optional feature that, when explicitly enabled by you, listens for sounds from your baby while the shush is playing. When the app detects that your baby has quieted down, it automatically stops playback. This feature is off by default and only activates when you turn it on. Listening happens entirely on-device in real time and is not recorded, stored, or transmitted anywhere.</li>
-          <li style={li}><strong style={{ color: T.ink }}>Custom shush recording</strong> — The "Record Your Own Shush" feature (available with the HushKit Premium unlock) allows you to capture a short audio clip for use as your shush sound within the app. This recording is saved locally on your device only and is never uploaded or shared.</li>
+          <li style={li}><strong style={{ color: T.ink }}>Custom shush recording</strong> — The "Record Your Own Shush" feature (available with the The Full Kit unlock) allows you to capture a short audio clip for use as your shush sound within the app. This recording is saved locally on your device only and is never uploaded or shared.</li>
         </ul>
         <p style={p}>Microphone access is used solely for these in-app functions. No audio is ever transmitted to our servers. You may change microphone permissions at any time in your device's Settings. If microphone access is not granted, ambient detection and custom recording will be unavailable, but pre-loaded shush sounds will still work normally.</p>
-        <p style={p}><strong style={{ color: T.ink }}>In-App Purchases.</strong> HushKit is free to download and includes the shush sound. A one-time purchase of $2.99 (HushKit Premium) unlocks brown noise, white noise, and the Record Your Own Shush feature. All payment transactions are processed by Apple through the App Store and are governed by Apple's Privacy Policy. We never receive, see, or store your payment information. The only thing we receive from Apple is a confirmation that the purchase was completed, which is stored locally on your device to enable the premium features.</p>
+        <p style={p}><strong style={{ color: T.ink }}>In-App Purchases.</strong> HushKit is free to download and includes the shush sound. A one-time purchase of $2.99 (The Full Kit) unlocks brown noise, white noise, and the Record Your Own Shush feature. All payment transactions are processed by Apple through the App Store and are governed by Apple's Privacy Policy. We never receive, see, or store your payment information. The only thing we receive from Apple is a confirmation that the purchase was completed, which is stored locally on your device to enable the premium features.</p>
         <p style={p}>All personal information that you provide to us must be true, complete, and accurate, and you must notify us of any changes.</p>
 
         {/* Section 2 */}
@@ -724,7 +724,7 @@ function App() {
           <Feature
             index="01" label="My voice" accent={T.pink}
             title={<React.Fragment>Your shush, recorded<span style={{ color: T.pink }}>.</span></React.Fragment>}
-            body="Hushkit comes with a default shush ready to go. Unlock the premium kit for $2.99 and record your own — so your baby hears exactly what they know. Trim it, crossfade it, and normalize the volume until it's just right."
+            body="Hushkit comes with a default shush ready to go. Unlock The Full Kit for $2.99 and record your own — so your baby hears exactly what they know. Trim it, crossfade it, and normalize the volume until it's just right."
             device={<Device src="images/preview.png" scale={mobile ? 0.52 : 0.6} glow={T.pink} />}
           />
         </Section>
