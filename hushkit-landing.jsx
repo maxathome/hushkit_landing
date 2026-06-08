@@ -6,8 +6,8 @@ const T = {
   bg: '#0e0d12', bg2: '#16151a', card: '#1d1c22', raised: '#26242b', rim: '#2e2b34',
   ink: '#ece6dc', inkMute: 'rgba(236,230,220,0.55)', inkFaint: 'rgba(236,230,220,0.28)',
   pink: '#e2a3b1', pinkDeep: '#b87884', blue: '#a8c3d6', sand: '#d6b478', hot: '#ff7548',
-  display: '"Space Grotesk", -apple-system, system-ui, sans-serif',
-  mono: '"IBM Plex Mono", ui-monospace, monospace',
+  display: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+  mono: 'ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace',
 };
 
 // ── small hardware screw, like the faceplate corners ───
