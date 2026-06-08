@@ -36,6 +36,9 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--rim); border-radius: 5px; }
 
+  /* hide scrollbar on horizontal scroll containers */
+  .scroll-x::-webkit-scrollbar { display: none; }
+
   /* shared motion */
   @keyframes wave-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
   .wave-scroll { animation: wave-scroll 6s linear infinite; }

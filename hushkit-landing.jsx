@@ -10,6 +10,18 @@ const T = {
   mono: 'ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace',
 };
 
+// ── responsive breakpoint ─────────────────────────────
+function useMobile() {
+  const [mobile, setMobile] = React.useState(() => window.innerWidth < 768);
+  React.useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const fn = e => setMobile(e.matches);
+    mq.addEventListener('change', fn);
+    return () => mq.removeEventListener('change', fn);
+  }, []);
+  return mobile;
+}
+
 // ── small hardware screw, like the faceplate corners ───
 function Screw({ size = 13, angle = 24 }) {
   return (
@@ -148,19 +160,20 @@ function PanelScrews({ inset = 16 }) {
 // NAV
 // ════════════════════════════════════════════════════════
 function Nav() {
+  const mobile = useMobile();
   return (
     <nav style={{
       position: 'sticky', top: 0, zIndex: 50,
       background: 'rgba(14,13,18,0.78)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)',
       borderBottom: `1px solid ${T.rim}`,
     }}>
-      <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 40px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ maxWidth: 1180, margin: '0 auto', padding: mobile ? '0 20px' : '0 40px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 7 }}>
           <span style={{ fontFamily: T.display, fontSize: 19, fontWeight: 600, letterSpacing: -0.4, color: T.ink }}>hushkit</span>
           <span style={{ width: 5, height: 5, borderRadius: '50%', background: T.pink, alignSelf: 'center', boxShadow: `0 0 7px ${T.pink}` }} />
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 30 }}>
-          {[['the kit', '#kit'], ['features', '#features'], ['sounds', '#sounds']].map(([l, h]) => (
+          {!mobile && [['the kit', '#kit'], ['features', '#features'], ['sounds', '#sounds']].map(([l, h]) => (
             <a key={l} href={h} style={{ fontFamily: T.mono, fontSize: 11, letterSpacing: 1.6, textTransform: 'uppercase', color: T.inkMute, textDecoration: 'none', transition: 'color .15s' }}
                onMouseEnter={e => e.currentTarget.style.color = T.ink}
                onMouseLeave={e => e.currentTarget.style.color = T.inkMute}>{l}</a>
@@ -176,45 +189,67 @@ function Nav() {
 // HERO
 // ════════════════════════════════════════════════════════
 function Hero() {
+  const mobile = useMobile();
   return (
     <div style={{ position: 'relative', overflow: 'hidden' }}>
-      {/* ambient backdrop */}
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 80% at 76% 28%, rgba(226,163,177,0.13) 0%, transparent 52%)', pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(100% 70% at 12% 96%, rgba(168,195,214,0.08) 0%, transparent 55%)', pointerEvents: 'none' }} />
-      <Section style={{ padding: '92px 40px 86px', position: 'relative' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 40, alignItems: 'center' }}>
-          {/* left — copy */}
-          <div className="reveal" style={{ minWidth: 0 }}>
-            <Eyebrow>HK-001 · White noise & shushing</Eyebrow>
+      <Section style={{ padding: mobile ? '56px 20px 48px' : '92px 40px 86px', position: 'relative' }}>
+        {mobile ? (
+          <div className="reveal" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+            <Eyebrow style={{ justifyContent: 'center' }}>HK-001 · White noise & shushing</Eyebrow>
             <h1 style={{
-              fontFamily: T.display, fontWeight: 500, fontSize: 78, lineHeight: 0.96,
-              letterSpacing: -3, margin: '22px 0 0', color: T.ink, textWrap: 'balance',
+              fontFamily: T.display, fontWeight: 500, fontSize: 52, lineHeight: 0.96,
+              letterSpacing: -2, margin: '18px 0 0', color: T.ink, textWrap: 'balance',
             }}>
               One kit.<br />Full quiet<span style={{ color: T.pink }}>.</span>
             </h1>
             <p style={{
-              fontFamily: T.display, fontWeight: 400, fontSize: 19, lineHeight: 1.55,
-              color: T.inkMute, margin: '26px 0 0', maxWidth: 480, textWrap: 'pretty',
+              fontFamily: T.display, fontWeight: 400, fontSize: 17, lineHeight: 1.55,
+              color: T.inkMute, margin: '20px 0 0', textWrap: 'pretty',
             }}>
-              Hushkit is a white noise and shushing app built to get your baby to sleep — and keep them there. Shush, brown noise, and white noise, all in one place.
+              Hushkit is a white noise and shushing app built to get your baby to sleep — and keep them there.
             </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginTop: 34, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginTop: 28 }}>
               <AppStore />
-              <a href="#features" style={{ fontFamily: T.mono, fontSize: 11.5, letterSpacing: 1.6, textTransform: 'uppercase', color: T.ink, textDecoration: 'none', borderBottom: `1px solid ${T.pinkDeep}`, paddingBottom: 3 }}>See the kit →</a>
               <span style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: 1.2, textTransform: 'uppercase', color: T.inkFaint }}>Free to download</span>
             </div>
-          </div>
-
-          {/* right — device pair */}
-          <div className="reveal" style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 540 }}>
-            <div style={{ position: 'absolute', transform: 'translateX(-58px) rotate(-5deg)', opacity: 0.62, filter: 'saturate(0.85)' }}>
-              <Device src="images/white.png" scale={0.52} glow={T.blue} />
-            </div>
-            <div style={{ position: 'relative', zIndex: 2, transform: 'translateX(40px) rotate(3deg)', boxShadow: '0 50px 90px rgba(0,0,0,0.6)', borderRadius: 30 }}>
-              <Device src="images/shush.png" scale={0.62} glow={T.pink} />
+            <div style={{ marginTop: 40, position: 'relative' }}>
+              <Device src="images/shush.png" scale={0.58} glow={T.pink} />
             </div>
           </div>
-        </div>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 40, alignItems: 'center' }}>
+            <div className="reveal" style={{ minWidth: 0 }}>
+              <Eyebrow>HK-001 · White noise & shushing</Eyebrow>
+              <h1 style={{
+                fontFamily: T.display, fontWeight: 500, fontSize: 78, lineHeight: 0.96,
+                letterSpacing: -3, margin: '22px 0 0', color: T.ink, textWrap: 'balance',
+              }}>
+                One kit.<br />Full quiet<span style={{ color: T.pink }}>.</span>
+              </h1>
+              <p style={{
+                fontFamily: T.display, fontWeight: 400, fontSize: 19, lineHeight: 1.55,
+                color: T.inkMute, margin: '26px 0 0', maxWidth: 480, textWrap: 'pretty',
+              }}>
+                Hushkit is a white noise and shushing app built to get your baby to sleep — and keep them there. Shush, brown noise, and white noise, all in one place.
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginTop: 34, flexWrap: 'wrap' }}>
+                <AppStore />
+                <a href="#features" style={{ fontFamily: T.mono, fontSize: 11.5, letterSpacing: 1.6, textTransform: 'uppercase', color: T.ink, textDecoration: 'none', borderBottom: `1px solid ${T.pinkDeep}`, paddingBottom: 3 }}>See the kit →</a>
+                <span style={{ fontFamily: T.mono, fontSize: 10, letterSpacing: 1.2, textTransform: 'uppercase', color: T.inkFaint }}>Free to download</span>
+              </div>
+            </div>
+            <div className="reveal" style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 540 }}>
+              <div style={{ position: 'absolute', transform: 'translateX(-58px) rotate(-5deg)', opacity: 0.62, filter: 'saturate(0.85)' }}>
+                <Device src="images/white.png" scale={0.52} glow={T.blue} />
+              </div>
+              <div style={{ position: 'relative', zIndex: 2, transform: 'translateX(40px) rotate(3deg)', boxShadow: '0 50px 90px rgba(0,0,0,0.6)', borderRadius: 30 }}>
+                <Device src="images/shush.png" scale={0.62} glow={T.pink} />
+              </div>
+            </div>
+          </div>
+        )}
       </Section>
     </div>
   );
@@ -224,6 +259,7 @@ function Hero() {
 // THE KIT — spec strip ("Everything in the kit")
 // ════════════════════════════════════════════════════════
 function Kit() {
+  const mobile = useMobile();
   const items = [
     ['airplay', 'AirPlay', 'cast to any apple speaker'],
     ['bt', 'Bluetooth', 'any speaker in the house'],
@@ -237,20 +273,20 @@ function Kit() {
     ear: <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M4 7a4 4 0 118 0c0 2-2 2.5-2 4.5s-1.5 2.5-3 2C5.5 13 4 12 4 7z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/></svg>,
   };
   return (
-    <Section id="kit" style={{ padding: '8px 40px 96px' }}>
+    <Section id="kit" style={{ padding: mobile ? '8px 20px 64px' : '8px 40px 96px' }}>
       <div className="reveal" style={{
         position: 'relative', background: `linear-gradient(180deg, ${T.bg2}, #121117)`,
-        border: `1px solid ${T.rim}`, borderRadius: 18, padding: '34px 40px',
+        border: `1px solid ${T.rim}`, borderRadius: 18, padding: mobile ? '28px 20px' : '34px 40px',
         boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 24px 60px rgba(0,0,0,0.35)',
       }}>
-        <PanelScrews inset={14} />
+        {!mobile && <PanelScrews inset={14} />}
         <div style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 30px' }}>
           <Eyebrow style={{ justifyContent: 'center' }}>Everything in the kit</Eyebrow>
-          <p style={{ fontFamily: T.display, fontSize: 22, lineHeight: 1.5, color: T.ink, margin: '16px 0 0', fontWeight: 400, textWrap: 'pretty' }}>
+          <p style={{ fontFamily: T.display, fontSize: mobile ? 17 : 22, lineHeight: 1.5, color: T.ink, margin: '16px 0 0', fontWeight: 400, textWrap: 'pretty' }}>
             AirPlay, Bluetooth, background playback, and listen detection — all included free. Unlock brown noise, white noise, and your own recorded shush for $2.99.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: mobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 12 }}>
           {items.map(([k, name, sub]) => (
             <div key={k} style={{
               background: T.card, border: `1px solid ${T.rim}`, borderRadius: 10,
@@ -273,21 +309,30 @@ function Kit() {
 // FEATURE MODULE (alternating)
 // ════════════════════════════════════════════════════════
 function Feature({ index, label, accent, title, body, device, flip, children }) {
+  const mobile = useMobile();
   const Text = (
-    <div style={{ minWidth: 0, maxWidth: 460 }}>
+    <div style={{ minWidth: 0, maxWidth: mobile ? '100%' : 460 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
         <span style={{ fontFamily: T.mono, fontSize: 12, letterSpacing: 1, fontWeight: 600, color: accent }}>{index} / 05</span>
         <span style={{ flex: 1, height: 1, background: T.rim, maxWidth: 60 }} />
         <Eyebrow color={accent} style={{ fontSize: 10.5 }}>{label}</Eyebrow>
       </div>
-      <h2 style={{ fontFamily: T.display, fontWeight: 500, fontSize: 46, lineHeight: 1.0, letterSpacing: -1.8, margin: 0, color: T.ink, textWrap: 'balance' }}>{title}</h2>
-      <p style={{ fontFamily: T.display, fontWeight: 400, fontSize: 17.5, lineHeight: 1.6, color: T.inkMute, margin: '20px 0 0', textWrap: 'pretty' }}>{body}</p>
+      <h2 style={{ fontFamily: T.display, fontWeight: 500, fontSize: mobile ? 36 : 46, lineHeight: 1.0, letterSpacing: mobile ? -1.2 : -1.8, margin: 0, color: T.ink, textWrap: 'balance' }}>{title}</h2>
+      <p style={{ fontFamily: T.display, fontWeight: 400, fontSize: mobile ? 16 : 17.5, lineHeight: 1.6, color: T.inkMute, margin: '16px 0 0', textWrap: 'pretty' }}>{body}</p>
       {children}
     </div>
   );
   const Visual = (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{device}</div>
   );
+  if (mobile) {
+    return (
+      <div className="reveal" style={{ padding: '52px 0', borderTop: `1px solid ${T.rim}` }}>
+        {Text}
+        <div style={{ marginTop: 32 }}>{Visual}</div>
+      </div>
+    );
+  }
   return (
     <div className="reveal" style={{
       display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'center',
@@ -300,6 +345,7 @@ function Feature({ index, label, accent, title, body, device, flip, children }) 
 
 // ── feature 02 triptych: three sounds ──────────────────
 function SoundsTriptych() {
+  const mobile = useMobile();
   const sounds = [
     ['shush', T.pink, 'images/shush.png'],
     ['brown', T.sand, 'images/brown.png'],
@@ -313,10 +359,10 @@ function SoundsTriptych() {
           <span style={{ width: 60, height: 1, background: T.rim }} />
           <Eyebrow style={{ fontSize: 10.5 }}>Three sounds</Eyebrow>
         </div>
-        <h2 style={{ fontFamily: T.display, fontWeight: 500, fontSize: 52, lineHeight: 1, letterSpacing: -2, margin: 0, color: T.ink }}>
+        <h2 style={{ fontFamily: T.display, fontWeight: 500, fontSize: mobile ? 38 : 52, lineHeight: 1, letterSpacing: mobile ? -1.4 : -2, margin: 0, color: T.ink }}>
           <span style={{ color: T.pink }}>Shush.</span> <span style={{ color: T.sand }}>Brown.</span> <span style={{ color: T.blue }}>White.</span>
         </h2>
-        <p style={{ fontFamily: T.display, fontWeight: 400, fontSize: 18, lineHeight: 1.6, color: T.inkMute, margin: '20px auto 0', maxWidth: 520, textWrap: 'pretty' }}>
+        <p style={{ fontFamily: T.display, fontWeight: 400, fontSize: mobile ? 16 : 18, lineHeight: 1.6, color: T.inkMute, margin: '16px auto 0', maxWidth: 520, textWrap: 'pretty' }}>
           No scrolling through sounds you'll never use — just the ones that work, tuned to your needs.
         </p>
         <div style={{ display: 'flex', justifyContent: 'center', gap: 20, marginTop: 16, flexWrap: 'wrap' }}>
@@ -329,10 +375,15 @@ function SoundsTriptych() {
           </span>
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: 36, marginTop: 48, flexWrap: 'wrap' }}>
+      <div style={mobile ? {
+        display: 'flex', gap: 20, marginTop: 36,
+        overflowX: 'auto', padding: '4px 0 16px',
+        scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch',
+        msOverflowStyle: 'none', scrollbarWidth: 'none',
+      } : { display: 'flex', justifyContent: 'center', gap: 36, marginTop: 48, flexWrap: 'wrap' }}>
         {sounds.map(([name, accent, src]) => (
-          <div key={name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18 }}>
-            <Device src={src} scale={0.5} glow={accent} />
+          <div key={name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18, flexShrink: 0, scrollSnapAlign: 'center' }}>
+            <Device src={src} scale={mobile ? 0.44 : 0.5} glow={accent} />
             <Eyebrow color={accent} style={{ fontSize: 11 }}>{name}</Eyebrow>
           </div>
         ))}
@@ -343,12 +394,13 @@ function SoundsTriptych() {
 
 // ── feature 05 visual: stays-on / background ───────────
 function BackgroundVisual() {
+  const mobile = useMobile();
   const bars = [0.3,0.5,0.75,0.55,0.9,0.65,0.4,0.85,0.7,0.45,0.8,0.6,0.9,0.5,0.7,0.85,0.4,0.65,0.9,0.55,0.75,0.6,0.8,0.45,0.7,0.55,0.85,0.4];
   return (
-    <div style={{ position: 'relative', width: 360, height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ position: 'relative', width: mobile ? '100%' : 360, height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ position: 'absolute', inset: 0, borderRadius: 22, background: 'radial-gradient(closest-side, rgba(226,163,177,0.16), transparent 72%)', pointerEvents: 'none' }} />
       <div style={{
-        position: 'relative', width: 320,
+        position: 'relative', width: mobile ? '100%' : 320,
         background: `linear-gradient(180deg, ${T.card}, #141319)`,
         border: `1px solid ${T.rim}`, borderRadius: 20, padding: '22px 22px 20px',
         boxShadow: '0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)',
@@ -621,25 +673,31 @@ function PrivacyPolicy({ onBack }) {
 // FOOTER
 // ════════════════════════════════════════════════════════
 function Footer() {
+  const mobile = useMobile();
   return (
     <div style={{ position: 'relative', overflow: 'hidden', borderTop: `1px solid ${T.rim}`, marginTop: 40 }}>
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(90% 120% at 50% 0%, rgba(226,163,177,0.12), transparent 60%)', pointerEvents: 'none' }} />
-      <Section style={{ padding: '100px 40px 56px', position: 'relative', textAlign: 'center' }}>
+      <Section style={{ padding: mobile ? '64px 20px 40px' : '100px 40px 56px', position: 'relative', textAlign: 'center' }}>
         <Eyebrow style={{ justifyContent: 'center' }}>HK-001 · now available</Eyebrow>
-        <h2 style={{ fontFamily: T.display, fontWeight: 500, fontSize: 64, lineHeight: 1, letterSpacing: -2.4, margin: '22px 0 0', color: T.ink }}>
+        <h2 style={{ fontFamily: T.display, fontWeight: 500, fontSize: mobile ? 42 : 64, lineHeight: 1, letterSpacing: mobile ? -1.6 : -2.4, margin: '22px 0 0', color: T.ink }}>
           One kit. Full quiet<span style={{ color: T.pink }}>.</span>
         </h2>
-        <p style={{ fontFamily: T.display, fontSize: 18, color: T.inkMute, margin: '20px auto 34px', maxWidth: 440, lineHeight: 1.55 }}>
+        <p style={{ fontFamily: T.display, fontSize: mobile ? 16 : 18, color: T.inkMute, margin: '16px auto 28px', maxWidth: 440, lineHeight: 1.55 }}>
           Put the phone down and actually rest. Hushkit keeps going.
         </p>
         <div style={{ display: 'flex', justifyContent: 'center' }}><AppStore /></div>
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 80, paddingTop: 26, borderTop: `1px solid ${T.rim}`, flexWrap: 'wrap', gap: 16 }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', marginTop: mobile ? 48 : 80,
+          paddingTop: 26, borderTop: `1px solid ${T.rim}`, gap: 16,
+          flexDirection: mobile ? 'column' : 'row',
+          justifyContent: mobile ? 'center' : 'space-between',
+        }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 7 }}>
             <span style={{ fontFamily: T.display, fontSize: 18, fontWeight: 600, letterSpacing: -0.4, color: T.ink }}>hushkit</span>
             <span style={{ width: 5, height: 5, borderRadius: '50%', background: T.pink, alignSelf: 'center' }} />
           </div>
-          <div style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkFaint, textTransform: 'uppercase' }}>White noise & shushing · made for the nursery</div>
+          {!mobile && <div style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkFaint, textTransform: 'uppercase' }}>White noise & shushing · made for the nursery</div>}
           <div style={{ display: 'flex', gap: 24 }}>
             <a href="/privacy" style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkMute, textTransform: 'uppercase', textDecoration: 'none' }}>privacy</a>
             <a href="mailto:support@hushkit.co" style={{ fontFamily: T.mono, fontSize: 10.5, letterSpacing: 1.4, color: T.inkMute, textTransform: 'uppercase', textDecoration: 'none' }}>support</a>
@@ -654,50 +712,51 @@ function Footer() {
 // PAGE
 // ════════════════════════════════════════════════════════
 function App() {
+  const mobile = useMobile();
+  const fp = mobile ? '0 20px' : '0 40px';
   return (
     <React.Fragment>
       <Nav />
       <Hero />
       <Kit />
       <div id="features">
-        <Section style={{ padding: '0 40px' }}>
+        <Section style={{ padding: fp }}>
           <Feature
             index="01" label="My voice" accent={T.pink}
             title={<React.Fragment>Your shush, recorded<span style={{ color: T.pink }}>.</span></React.Fragment>}
             body="Hushkit comes with a default shush ready to go. Unlock the premium kit for $2.99 and record your own — so your baby hears exactly what they know. Trim it, crossfade it, and normalize the volume until it's just right."
-            device={<Device src="images/preview.png" scale={0.6} glow={T.pink} />}
+            device={<Device src="images/preview.png" scale={mobile ? 0.52 : 0.6} glow={T.pink} />}
           />
         </Section>
 
-        <Section style={{ padding: '0 40px' }}>
+        <Section style={{ padding: fp }}>
           <SoundsTriptych />
         </Section>
 
-        <Section style={{ padding: '0 40px' }}>
+        <Section style={{ padding: fp }}>
           <Feature
             index="03" label="Listen detection" accent={T.pink} flip
             title={<React.Fragment>Listen<span style={{ color: T.pink }}>.</span></React.Fragment>}
             body="Set a noise threshold and a silence timer. When your baby stays quiet long enough, Hushkit stops on its own. No fumbling with your phone in the dark."
-            device={<Device src="images/listen.png" scale={0.6} glow={T.pink} />}
+            device={<Device src="images/listen.png" scale={mobile ? 0.52 : 0.6} glow={T.pink} />}
           />
         </Section>
 
-        <Section style={{ padding: '0 40px' }}>
+        <Section style={{ padding: fp }}>
           <Feature
             index="04" label="AirPlay & Bluetooth" accent={T.blue}
             title={<React.Fragment>Send it anywhere<span style={{ color: T.blue }}>.</span></React.Fragment>}
             body="AirPlay and Bluetooth support means your shush follows you — or stays in the nursery while you don't. Play through any speaker in your home."
-            device={<Device src="images/output.png" scale={0.6} glow={T.blue} />}
+            device={<Device src="images/output.png" scale={mobile ? 0.52 : 0.6} glow={T.blue} />}
           />
         </Section>
 
-        <Section style={{ padding: '0 40px' }}>
+        <Section style={{ padding: fp }}>
           <Feature
             index="05" label="Background playback" accent={T.pink} flip
             title={<React.Fragment>Stays on.<br />You don't have to<span style={{ color: T.pink }}>.</span></React.Fragment>}
             body="Lock your screen. Switch apps. Hushkit keeps running in the background so you can put the phone down and actually rest."
             device={<BackgroundVisual />}
-
           />
         </Section>
       </div>
