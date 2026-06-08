@@ -273,7 +273,7 @@ function Kit() {
     ear: <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M4 7a4 4 0 118 0c0 2-2 2.5-2 4.5s-1.5 2.5-3 2C5.5 13 4 12 4 7z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/></svg>,
   };
   return (
-    <Section id="kit" style={{ padding: mobile ? '8px 20px 64px' : '8px 40px 96px' }}>
+    <Section id="kit" style={{ padding: mobile ? '8px 20px 32px' : '8px 40px 96px' }}>
       <div className="reveal" style={{
         position: 'relative', background: `linear-gradient(180deg, ${T.bg2}, #121117)`,
         border: `1px solid ${T.rim}`, borderRadius: 18, padding: mobile ? '28px 20px' : '34px 40px',
@@ -327,7 +327,7 @@ function Feature({ index, label, accent, title, body, device, flip, children }) 
   );
   if (mobile) {
     return (
-      <div className="reveal" style={{ padding: '52px 0', borderTop: `1px solid ${T.rim}` }}>
+      <div className="reveal" style={{ padding: '36px 0', borderTop: `1px solid ${T.rim}` }}>
         {Text}
         <div style={{ marginTop: 32 }}>{Visual}</div>
       </div>
