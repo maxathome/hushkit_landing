@@ -58,7 +58,7 @@ function AppStore({ small }) {
   const h = small ? 40 : 52;
   const w = Math.round(h * (119.66407 / 40));
   return (
-    <a href="#" onClick={e => e.preventDefault()} style={{
+    <a href="https://apps.apple.com/us/app/hushkit-baby-sleep-sounds/id6774291756" target="_blank" rel="noopener noreferrer" style={{
       display: 'inline-flex', textDecoration: 'none',
       transition: 'transform .18s ease, opacity .18s ease',
     }}
